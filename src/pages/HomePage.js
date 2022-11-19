@@ -1,10 +1,11 @@
+import Banner from "../component/banner/Banner";
 import Header from "../component/Header";
 
 const HomePage = () => {
   return (
     <div>
       <Header />
-      HomePage
+      <Banner />
     </div>
   );
 };

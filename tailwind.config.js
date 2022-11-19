@@ -19,6 +19,9 @@ module.exports = {
       gray: "#606060",
       dropDown: "#424242",
     },
+    backgroundImage: {
+      bannerImg: "url('/public/banner2.jpg')",
+    },
   },
   plugins: [],
 };

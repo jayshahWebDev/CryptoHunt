@@ -1,9 +1,11 @@
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { cryptoContext } from "../cryptoContext";
 
 const Header = () => {
-  const [selectedItem, setSelectedItem] = useState("USD");
   const [open, setOpen] = useState(false);
+
+  const { currency, setCurrency } = useContext(cryptoContext);
 
   const handleDropDown = () => {
     open ? setOpen(false) : setOpen(true);
@@ -19,7 +21,7 @@ const Header = () => {
       <div className="mx-[3%] flex gap-x-[20px] ">
         <div className="w-[80px] relative " onClick={handleDropDown}>
           <div className="flex items-center justify-between px-[10px] py-[5px] rounded-[5px] text-white w-[100%] cursor-pointer border-[1px] border-gray hover:border-white">
-            <p>{selectedItem}</p>
+            <p>{currency}</p>
             {open ? (
               <AiFillCaretUp color="#ffffff" />
             ) : (
@@ -35,8 +37,7 @@ const Header = () => {
               <li
                 className="hover:bg-gray w-[100%] px-[10px] py-[5px] cursor-pointer"
                 onClick={(e) => {
-                  console.log(e.target.innerText);
-                  setSelectedItem(e.target.innerText);
+                  setCurrency(e.target.innerText);
                 }}
               >
                 USD
@@ -44,8 +45,7 @@ const Header = () => {
               <li
                 className="hover:bg-gray w-[100%] px-[10px] py-[5px] cursor-pointer"
                 onClick={(e) => {
-                  console.log(e.target.innerText);
-                  setSelectedItem(e.target.innerText);
+                  setCurrency(e.target.innerText);
                 }}
               >
                 INR

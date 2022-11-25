@@ -18,6 +18,8 @@ module.exports = {
       logo: "#ffd700",
       gray: "#606060",
       dropDown: "#424242",
+      red: "#E21717",
+      green: "#3DBE29",
     },
     backgroundImage: {
       bannerImg: "url('/public/banner2.jpg')",

@@ -7,7 +7,7 @@ module.exports = {
       montserrat: ["Montserrat", "sans-serif"],
     },
     screens: {
-      tablet: "480px",
+      tablet: "768px",
 
       laptop: "768px",
     },
@@ -20,6 +20,9 @@ module.exports = {
       dropDown: "#424242",
       red: "#E21717",
       green: "#3DBE29",
+      black: "#000000",
+      darkBlack: "#16171a",
+      lightGray:"#a9a9a9"
     },
     backgroundImage: {
       bannerImg: "url('/public/banner2.jpg')",

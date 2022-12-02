@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <div className="bg-headerBg h-[60px] flex justify-between items-center">
+    <div className="bg-headerBg h-[60px] flex justify-between items-center shadow-xl">
       <div className="mx-[3%]">
         <p className="text-logo font-montserrat font-bold text-[20px]">
           Crypto Hunt

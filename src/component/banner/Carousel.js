@@ -4,6 +4,7 @@ import { TrendingCoins } from "../../config/api";
 import { cryptoContext } from "../../cryptoContext";
 import { NavLink } from "react-router-dom";
 import AliceCarousel from "react-alice-carousel";
+import { numberWithCommas } from "../../util";
 
 const Carousel = () => {
   const { currency, symbol } = useContext(cryptoContext);
@@ -17,10 +18,6 @@ const Carousel = () => {
   useEffect(() => {
     fetchTrendingCoins();
   }, [currency]);
-
-  const numberWithCommas = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
 
   const items = trendingCoins.map((coin) => {
     let percentage = coin.price_change_percentage_24h;

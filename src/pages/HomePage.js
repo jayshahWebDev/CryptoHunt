@@ -1,4 +1,5 @@
 import Banner from "../component/banner/Banner";
+import CoinList from "../component/CoinList";
 import Header from "../component/Header";
 
 const HomePage = () => {
@@ -6,6 +7,7 @@ const HomePage = () => {
     <div>
       <Header />
       <Banner />
+      <CoinList />
     </div>
   );
 };

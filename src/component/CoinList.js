@@ -40,7 +40,7 @@ const CoinList = () => {
 
         {coinList &&
           coinList.map((coin) => (
-            <NavLink to={`/coin/${coin.id}`}>
+            <NavLink to={`/coin/${coin.id}`} key={coin.id}>
               <div className="bg-darkBlack" key={coin.id}>
                 <div className="flex text-white font-semibold py-[10px]">
                   <div className="flex items-center gap-x-[10px] flex-[40%] ml-[10px]">

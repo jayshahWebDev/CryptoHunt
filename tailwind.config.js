@@ -9,7 +9,7 @@ module.exports = {
     screens: {
       tablet: "768px",
 
-      laptop: "768px",
+      laptop: "1024px",
     },
     colors: {
       headerBg: "#14161a",

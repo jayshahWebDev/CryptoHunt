@@ -25,10 +25,10 @@ const Sidebar = () => {
 
   useEffect(() => {
     fetchCoinDetail();
-  }, []);
+  }, [currency]);
 
   return (
-    <div>
+    <div className="laptop:flex-[24%]">
       {coinDetail && (
         <div>
           <div className="flex flex-col justify-center items-center mt-[2%]">
@@ -37,25 +37,28 @@ const Sidebar = () => {
               {coinDetail.name}
             </p>
           </div>
-          <div className="flex flex-col gap-y-[15px] font-montserrat text-white text-justify">
-            <h3 className="text-[17px]">
-              {coinDetail.description.en.split(". ")[0]}.
-            </h3>
+          <div className="flex flex-col gap-y-[15px] laptop:mt-[25px] laptop:gap-y-[25px] font-montserrat text-white text-justify">
+            <div
+              className="text-[17px]"
+              dangerouslySetInnerHTML={{
+                __html: `${coinDetail.description.en.split(". ")[0]}.`,
+              }}
+            />
 
-            <p className="text-[27px]">
+            <p className="text-[25px]">
               <span className="font-semibold">Rank : </span>
               {coinDetail.market_cap_rank}
             </p>
-            <p className="text-[27px]">
+            <p className="text-[25px]">
               <span className="font-semibold">Current Price : </span>
-              {symbol+" "}
+              {symbol + " "}
               {numberWithCommas(
                 coinDetail.market_data.current_price[currency.toLowerCase()]
               )}
             </p>
-            <p className="text-[27px]">
+            <p className="text-[25px]">
               <span className="font-semibold">Market Cap : </span>
-              {symbol+" "}
+              {symbol + " "}
               {numberWithCommas(
                 coinDetail.market_data.market_cap[currency.toLowerCase()]
                   .toString()

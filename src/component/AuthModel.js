@@ -1,18 +1,62 @@
 import { useContext, useState } from "react";
 import { cryptoContext } from "../cryptoContext";
 import { RxCross1 } from "react-icons/rx";
+import { toastMessage } from "../helper/toast";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../pages/FireBase";
 
 const AuthModel = () => {
   const { openAuthModel, setOpenAuthModel } = useContext(cryptoContext);
   const [tabIndex, setTabIndex] = useState(1);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const removeModel = () => {
     setOpenAuthModel(false);
   };
 
   const setIndex = (index) => {
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
     setTabIndex(index);
   };
+  const handleSubmit = async () => {
+    try {
+      if (tabIndex === 2) {
+        if (password != confirmPassword) {
+          return toastMessage("error", "Passwords does not match");
+        }
+
+        let signUpUser = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        toastMessage("success", "Welcome to CryptoHunt");
+      } else {
+        let signInUser = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        toastMessage("success", "Welcome to CryptoHunt");
+      }
+    } catch (error) {
+      console.log("handleSubmit AuthModelComponent Error::", error.message);
+      toastMessage("error", error.message);
+    } finally {
+      setOpenAuthModel(false);
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    }
+  };
+
   return (
     <div className="w-[300px] absolute top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] px-[20px] py-[15px] bg-modelColor">
       <div className="flex justify-end">
@@ -50,6 +94,8 @@ const AuthModel = () => {
           <input
             className="p-[5px] bg-modelColor border-[1px] border-gray rounded-[10px] focus:border-white outline-none"
             placeholder="Enter Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -58,6 +104,8 @@ const AuthModel = () => {
           <input
             className="p-[5px] bg-modelColor border-[1px] border-gray rounded-[10px] focus:border-white outline-none"
             placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
@@ -70,10 +118,15 @@ const AuthModel = () => {
           <input
             className="p-[5px] bg-modelColor border-[1px] border-gray rounded-[10px] focus:border-white outline-none"
             placeholder="Enter Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
 
-        <button className="bg-yellow py-[10px] rounded-[10px] text-black">
+        <button
+          className="bg-yellow py-[10px] rounded-[10px] text-black"
+          onClick={handleSubmit}
+        >
           {tabIndex === 1 ? "SIGN IN" : "SIGN UP"}
         </button>
       </div>

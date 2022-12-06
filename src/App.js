@@ -6,6 +6,9 @@ import { cryptoContext } from "./cryptoContext";
 import { useState, useEffect } from "react";
 import { CoinListData } from "./config/api";
 import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./pages/FireBase";
 
 function App() {
   const [currency, setCurrency] = useState("INR");
@@ -28,6 +31,13 @@ function App() {
     }
   }, [currency]);
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) setUser(user);
+      else setUser(null);
+    });
+  }, []);
+
   return (
     <cryptoContext.Provider
       value={{
@@ -41,6 +51,8 @@ function App() {
         setPage,
         openAuthModel,
         setOpenAuthModel,
+        user,
+        setUser,
       }}
     >
       <BrowserRouter>
@@ -50,6 +62,7 @@ function App() {
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </cryptoContext.Provider>
   );
 }

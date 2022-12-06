@@ -3,10 +3,11 @@ import AuthModel from "../component/AuthModel";
 import Chart from "../component/coinPage/Chart";
 import Sidebar from "../component/coinPage/Sidebar";
 import Header from "../component/Header";
+import SideBar from "../component/SideBar";
 import { cryptoContext } from "../cryptoContext";
 
 const CoinPage = () => {
-  const { openAuthModel } = useContext(cryptoContext);
+  const { openAuthModel, sidebar } = useContext(cryptoContext);
 
   return (
     <div className={`bg-darkBlack min-h-[100vh]`}>
@@ -15,6 +16,7 @@ const CoinPage = () => {
         <Sidebar />
         <Chart />
         {openAuthModel ? <AuthModel /> : ""}
+        {sidebar ? <SideBar /> : ""}
       </div>
     </div>
   );

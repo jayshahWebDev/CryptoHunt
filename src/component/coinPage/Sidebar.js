@@ -45,18 +45,18 @@ const Sidebar = () => {
               }}
             />
 
-            <p className="text-[25px]">
+            <p className="text-[23px]">
               <span className="font-semibold">Rank : </span>
               {coinDetail.market_cap_rank}
             </p>
-            <p className="text-[25px]">
+            <p className="text-[23px]">
               <span className="font-semibold">Current Price : </span>
               {symbol + " "}
               {numberWithCommas(
                 coinDetail.market_data.current_price[currency.toLowerCase()]
               )}
             </p>
-            <p className="text-[25px]">
+            <p className="text-[23px]">
               <span className="font-semibold">Market Cap : </span>
               {symbol + " "}
               {numberWithCommas(

@@ -17,6 +17,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [user, setUser] = useState(null);
   const [openAuthModel, setOpenAuthModel] = useState(false);
+  const [sidebar, setSidebar] = useState(false);
 
   const fetchCoinList = async () => {
     let coinData = await axios.get(CoinListData(currency, page));
@@ -53,6 +54,8 @@ function App() {
         setOpenAuthModel,
         user,
         setUser,
+        sidebar,
+        setSidebar,
       }}
     >
       <BrowserRouter>

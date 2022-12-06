@@ -6,15 +6,8 @@ import { numberWithCommas } from "../util";
 import { NavLink } from "react-router-dom";
 
 const CoinList = () => {
-  const { currency, symbol } = useContext(cryptoContext);
-  const [page, setPage] = useState(1);
-  const [coinList, setCoinList] = useState([]);
-
-  const fetchCoinList = async () => {
-    let coinData = await axios.get(CoinListData(currency, page));
-    setCoinList(coinData.data);
-    console.log("coinData.data::", coinData.data);
-  };
+  const { currency, symbol, coinList, setCoinList, fetchCoinList } =
+    useContext(cryptoContext);
 
   useEffect(() => {
     fetchCoinList();

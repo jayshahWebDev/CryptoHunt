@@ -5,10 +5,15 @@ import { cryptoContext } from "../cryptoContext";
 const Header = () => {
   const [open, setOpen] = useState(false);
 
-  const { currency, setCurrency } = useContext(cryptoContext);
+  const { currency, setCurrency, openAuthModel, setOpenAuthModel } =
+    useContext(cryptoContext);
 
   const handleDropDown = () => {
     open ? setOpen(false) : setOpen(true);
+  };
+
+  const handleClick = () => {
+    setOpenAuthModel(true);
   };
 
   return (
@@ -54,8 +59,11 @@ const Header = () => {
           </div>
         </div>
 
-        <button className="text-headerBg bg-yellow px-[10px] py-[5px] rounded-[5px] cursor-pointer">
-          LOGIN
+        <button
+          onClick={handleClick}
+          className="text-headerBg bg-yellow px-[10px] py-[5px] rounded-[5px] cursor-pointer"
+        >
+          SIGN UP
         </button>
       </div>
     </div>

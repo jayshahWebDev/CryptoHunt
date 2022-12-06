@@ -22,7 +22,8 @@ module.exports = {
       green: "#3DBE29",
       black: "#000000",
       darkBlack: "#16171a",
-      lightGray:"#a9a9a9"
+      lightGray:"#a9a9a9",
+      modelColor:"#404040"
     },
     backgroundImage: {
       bannerImg: "url('/public/banner2.jpg')",

@@ -23,7 +23,6 @@ const Chart = () => {
   );
   const { id } = useParams();
   const [chartData, setChartData] = useState([]);
-  const [resize, setResize] = useState([]);
 
   const { symbol, currency } = useContext(cryptoContext);
 

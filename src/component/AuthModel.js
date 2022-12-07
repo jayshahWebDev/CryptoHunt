@@ -4,9 +4,12 @@ import { RxCross1 } from "react-icons/rx";
 import { toastMessage } from "../helper/toast";
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../pages/FireBase";
+import { FcGoogle } from "react-icons/fc";
 
 const AuthModel = () => {
   const { openAuthModel, setOpenAuthModel } = useContext(cryptoContext);
@@ -55,6 +58,22 @@ const AuthModel = () => {
       setPassword("");
       setConfirmPassword("");
     }
+  };
+
+  const googleSignIn = () => {
+    const googleAuthProvider = new GoogleAuthProvider();
+    signInWithPopup(auth, googleAuthProvider)
+      .then((result) => {
+        toastMessage("success", "Welcome to CryptoHunt");
+        console.log("user:::", result.user);
+      })
+      .catch((error) => {
+        console.log("googleSignIn Error::", error.message);
+        toastMessage("error", error.message);
+      })
+      .finally(() => {
+        setOpenAuthModel(false);
+      });
   };
 
   return (
@@ -129,6 +148,19 @@ const AuthModel = () => {
         >
           {tabIndex === 1 ? "SIGN IN" : "SIGN UP"}
         </button>
+      </div>
+      <div className="flex flex-col gap-y-[20px] justify-center items-center font-montserrat font-medium text-white">
+        <span>OR</span>
+
+        <div
+          className="bg-blue flex w-full h-[40px] items-center gap-x-[20px] cursor-pointer"
+          onClick={googleSignIn}
+        >
+          <div className="h-full bg-white w-[50px] flex justify-center items-center">
+            <FcGoogle size={"30px"} />
+          </div>
+          <p>SignIn with Google</p>
+        </div>
       </div>
     </div>
   );

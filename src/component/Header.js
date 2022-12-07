@@ -76,13 +76,13 @@ const Header = () => {
 
         {user ? (
           <div
-            className="h-[50px] w-[50px] rounded-full cursor-pointer flex justify-center items-center"
+            className="h-[40px] w-[40px] rounded-full cursor-pointer flex justify-center items-center"
             onClick={openSidebar}
           >
             {user.photoURL != null ? (
-              <img src={user.photoURL} className="w-full h-full" />
+              <img src={user.photoURL} className="w-full h-full rounded-full" />
             ) : (
-              <FaUserAlt size={"30px"} color="#eebc1d" />
+              <FaUserAlt size={"27px"} color="#eebc1d" />
             )}
           </div>
         ) : (

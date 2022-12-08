@@ -1,16 +1,20 @@
 import axios from "axios";
+import { setDoc, doc, updateDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { SingleCoin } from "../../config/api";
 import { cryptoContext } from "../../cryptoContext";
+import { db } from "../../pages/FireBase";
 import { numberWithCommas } from "../../util";
-import CoinList from "../CoinList";
 
 const Sidebar = () => {
   const { id } = useParams();
   const [coinDetail, setCoinDetail] = useState("");
 
-  const { currency, symbol } = useContext(cryptoContext);
+  const { currency, symbol, user, watchList, setWatchList } =
+    useContext(cryptoContext);
+
+  const coinInWatchList = watchList.includes(id);
 
   const fetchCoinDetail = async () => {
     try {
@@ -26,6 +30,25 @@ const Sidebar = () => {
   useEffect(() => {
     fetchCoinDetail();
   }, [currency]);
+
+  const queryFirebaseDb = async () => {
+    try {
+      const dbRef = doc(db, "watchList", user.uid);
+      if (!coinInWatchList) {
+        await setDoc(dbRef, {
+          coins: watchList ? [...watchList, id] : [id],
+        });
+      } else {
+        await updateDoc(dbRef, {
+          coins: watchList.filter((coin) => {
+            return coin != id;
+          }),
+        });
+      }
+    } catch (error) {
+      console.log("firebase error::", error.message);
+    }
+  };
 
   return (
     <div className="laptop:flex-[24%]">
@@ -66,6 +89,15 @@ const Sidebar = () => {
               )}
               M
             </p>
+          </div>
+
+          <div className="flex justify-center mt-[20px]">
+            <button
+              onClick={queryFirebaseDb}
+              className="bg-yellow font-montserrat font-medium text-black py-[10px] px-[8px] rounded-[10px]"
+            >
+              {coinInWatchList ? "Remove From WatchList" : "Add To WatchList"}
+            </button>
           </div>
         </div>
       )}

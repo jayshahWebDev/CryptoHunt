@@ -8,7 +8,8 @@ import { CoinListData } from "./config/api";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./pages/FireBase";
+import { auth, db } from "./pages/FireBase";
+import { doc, onSnapshot } from "firebase/firestore";
 
 function App() {
   const [currency, setCurrency] = useState("INR");
@@ -18,6 +19,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [openAuthModel, setOpenAuthModel] = useState(false);
   const [sidebar, setSidebar] = useState(false);
+  const [watchList, setWatchList] = useState([]);
 
   const fetchCoinList = async () => {
     let coinData = await axios.get(CoinListData(currency, page));
@@ -39,6 +41,23 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      const dbRef = doc(db, "watchList", user.uid);
+      var unsubscribe = onSnapshot(dbRef, (coin) => {
+        if (coin.exists()) {
+          setWatchList(coin.data().coins);
+        } else {
+          console.log("No Items in Watchlist");
+        }
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [user]);
+
   return (
     <cryptoContext.Provider
       value={{
@@ -56,6 +75,8 @@ function App() {
         setUser,
         sidebar,
         setSidebar,
+        watchList,
+        setWatchList,
       }}
     >
       <BrowserRouter>

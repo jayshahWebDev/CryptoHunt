@@ -3,10 +3,13 @@ import { RxCross1 } from "react-icons/rx";
 import { cryptoContext } from "../cryptoContext";
 import { FaUserAlt } from "react-icons/fa";
 import { signOut } from "firebase/auth";
-import { auth } from "../pages/FireBase";
+import { auth, db } from "../pages/FireBase";
+import { AiFillDelete } from "react-icons/ai";
+import { async } from "@firebase/util";
+import { doc, updateDoc } from "firebase/firestore";
 
 const SideBar = () => {
-  const { setSidebar, user } = useContext(cryptoContext);
+  const { setSidebar, user, watchList } = useContext(cryptoContext);
   const closeRightSideBar = () => {
     setSidebar(false);
   };
@@ -16,8 +19,17 @@ const SideBar = () => {
     setSidebar(false);
   };
 
+  const removeFromWatchList = async (id) => {
+    const dbRef = doc(db, "watchList", user.uid);
+    await updateDoc(dbRef, {
+      coins: watchList.filter((coin) => {
+        return coin != id;
+      }),
+    });
+  };
+
   return (
-    <div className="transition duration-500 bg-modelColor ease-in-out w-[280px] h-screen absolute right-0 top-0">
+    <div className="transition duration-500 bg-modelColor ease-in-out w-[280px] h-screen fixed right-0 top-0">
       <RxCross1
         onClick={closeRightSideBar}
         size={"30px"}
@@ -37,7 +49,26 @@ const SideBar = () => {
         </p>
         <div>
           <p>WatchList</p>
-          <div className="mt-[10px] w-[240px] border-[1px] border-white rounded-[10px] min-h-[400px] overflow-y-auto"></div>
+          <div className="mt-[10px] w-[240px] border-[1px] border-white rounded-[10px] min-h-[400px] overflow-y-auto">
+            <div className="mt-[20px] flex flex-col items-center">
+              {watchList &&
+                watchList.map((coin) => (
+                  <div className="flex justify-around py-[5px] rounded-[10px] gap-x-[25px] w-[200px] bg-yellow">
+                    <p className="text-black font-montserrat font-medium">
+                      {coin.toUpperCase()}
+                    </p>
+                    <AiFillDelete
+                      className="cursor-pointer"
+                      size={"25px"}
+                      color="#000000"
+                      onClick={() => {
+                        removeFromWatchList(coin);
+                      }}
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
         <button
           className="py-[10px] px-[20px] rounded-[10px] bg-yellow text-black"
